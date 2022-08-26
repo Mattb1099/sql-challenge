@@ -21,50 +21,6 @@ CREATE TABLE departments (
 SELECT *
 FROM departments;
 
--- Create the names table
-CREATE TABLE dept_emp (
-	emp_no INT PRIMARY KEY,
-	dept_no Varchar
-);
-
--- Check data import
-SELECT *
-FROM dept_emp;
-
--- Create the names table
-CREATE TABLE dept_manager (
-	dept_no Varchar PRIMARY KEY,
-	emp_no INT
-);
-
--- Check data import
-SELECT *
-FROM dept_manager;
-
--- Create the names table
-CREATE TABLE employees (
-	emp_no INT PRIMARY KEY,
-	emp_title Varchar,
-	birth_date DATE,
-	first_name Varchar,
-	last_name Varchar,
-	sex Varchar,
-	hire_date DATE
-);
-
--- Check data import
-SELECT *
-FROM employees;
-
--- Create the names table
-CREATE TABLE salaries ( 
-	emp_no INT PRIMARY KEY,
-	salary INT 
-);
-
--- Check data import
-SELECT *
-FROM salaries;
 
 -- Create the names table
 CREATE TABLE titles (
@@ -77,16 +33,60 @@ SELECT *
 FROM titles;
 
 
-CREATE TABLE "departments" (
-    "dept_no" Int   NOT NULL,
-    "dept_name" varchar(9)   NOT NULL,
-    CONSTRAINT "pk_departments" PRIMARY KEY (
-        "dept_no"
-     )
+-- Create the names table
+CREATE TABLE employees (
+	emp_no INT PRIMARY KEY,
+	emp_title Varchar,
+	birth_date DATE,
+	first_name Varchar,
+	last_name Varchar,
+	sex Varchar,
+	hire_date DATE,
+	FOREIGN KEY (emp_title) REFERENCES titles(title_id)
 );
 
-Select * From departments;
+-- Check data import
+SELECT *
+FROM employees;
 
+-- Create the names table
+CREATE TABLE salaries ( 
+	emp_no INT ,
+	salary INT ,
+	FOREIGN KEY (emp_no) REFERENCES employees(emp_no)
+);
+
+-- Check data import
+SELECT *
+FROM salaries;
+
+
+
+-- Create the names table
+CREATE TABLE dept_manager (
+	dept_no Varchar,
+	emp_no INT,
+	FOREIGN KEY (emp_no) REFERENCES employees(emp_no),
+	FOREIGN KEY (dept_no) REFERENCES departments(dept_no),
+	PRIMARY KEY (dept_no, emp_no)
+);
+
+-- Check data import
+SELECT *
+FROM dept_manager;
+
+-- Create the names table
+CREATE TABLE dept_emp (
+	emp_no INT,
+	dept_no Varchar,
+	FOREIGN KEY (emp_no) REFERENCES employees(emp_no),
+	FOREIGN KEY (dept_no) REFERENCES departments(dept_no)
+	
+);
+
+-- Check data import
+SELECT *
+FROM dept_emp;
 
 
 
